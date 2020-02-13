@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>{{recipe.title}}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'fancy/css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navigation</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li><a class="nav-item active" href="/dashboard">Dashboard</a></li>
+                <li><a class="nav-item active" href="/user/{{user_id}}">Your Recipe Box</a></li>
+            </ul>
+            <span><a class="nav-link" href="/logout">Log Out</a></span>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row" id="top_row">
+            <div class="col-sm">
+                <div class = "large_img">
+                    {% csrf_token %}
+                    <img src="{{ recipe.photo.url }}" alt="{{ recipe.title }}">
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="recipe_info">
+                    <h4>{{recipe.title}}</h4>
+                    <span><h6><a class="nav-link" href="/meals/{{recipe.meal}}">{{recipe.meal}}</a></h6></span>
+                    <p>Ingredients:</p>
+                    <div class="recipe_details">
+                        {{recipe.recipe | safe | linebreaks}}
+                    </div>                   
+                </div>
+            </div>
+        </div>
+        <div class="row" id="instructions">
+            <p>Instructions:</p>
+            {{recipe.instructions | safe | linebreaks}}
+        </div>
+    </div>
+</body>
+</html>
